@@ -1,0 +1,38 @@
+﻿<Page x:Class="SmartHome.Views.HomeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+      Width="1024"
+      Height="800">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="None"  ImageSource="/PiantaCasa.png" AlignmentY="Center" AlignmentX="Center"/>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+
+
+        <Button Grid.Column="1" Grid.Row="1" Command="{Binding ButtonCommand}" Name="LightName" Background="Beige" Content="{Binding Value}" HorizontalAlignment="Center" Height="50" Width="100" Margin="5 5 5 5"/>
+        <Slider Grid.Column="1" Grid.Row="1" Value="{Binding LightValue, Mode=TwoWay}"  Minimum="0" Maximum="100" HorizontalAlignment="Center" VerticalAlignment="Bottom"   />
+
+        <Button Grid.Column="0" Grid.Row="1"  Name="Sala" Command="{Binding ButtonCommand}"   FontSize="2"     Background="{Binding IsLightSalaOn,Mode=TwoWay}" Content="Sala"  HorizontalAlignment="Center" Height="25" Width="25" Margin="288,132,199,243" RenderTransformOrigin="-1.907,2.067"/>
+        <Button Grid.Column="0" Grid.Row="1"  Name="pranzo" Command="{Binding ButtonCommand}" FontSize="2"     Background="{Binding IsLightPranzoOn,Mode=TwoWay}" HorizontalAlignment="Center" Height="25" Width="25" Margin="477,132,10,243" RenderTransformOrigin="-1.907,2.067"/>
+        <Button Grid.Column="0" Grid.Row="0"  Name="Uno" Command="{Binding ButtonCommand}"    FontSize="2"     Background="{Binding IsLightOneOn,Mode=TwoWay}" Content="1" IsEnabled="{Binding IsOneOn, Mode=TwoWay}" HorizontalAlignment="Center" Height="25" Width="25" Margin="288,375,199,0" RenderTransformOrigin="-1.907,2.067"/>
+        <Button Grid.Column="0" Grid.Row="0"  Name="Due" Command="{Binding ButtonCommand}"    FontSize="2"     Background="{Binding IsLightTwoOn,Mode=TwoWay}"  Content="2" IsEnabled="{Binding IsTwoOn, Mode=TwoWay}"  HorizontalAlignment="Center" Height="25" Width="25" Margin="429,365,58,10" RenderTransformOrigin="-1.907,2.067"/>
+        <Button Grid.Column="1" Grid.Row="0"  Name="Tre" Command="{Binding ButtonCommand}"    FontSize="2"     Background="{Binding IsLightThreeOn,Mode=TwoWay}" Content="3" IsEnabled="{Binding IsThreeOn, Mode=TwoWay}"  HorizontalAlignment="Center" Height="25" Width="25" Margin="60,309,427,66" RenderTransformOrigin="-1.907,2.067"/>
+        <Button Grid.Column="1" Grid.Row="1"  Name="Flavio" Command="{Binding ButtonCommand}" FontSize="2"     Background="{Binding IsLightFlavioOn,Mode=TwoWay}" Content="Flavio" HorizontalAlignment="Center" Height="25" Width="25" Margin="281,10,206,365" RenderTransformOrigin="-1.907,2.067"/>
+        <Button Grid.Column="1" Grid.Row="0"  Name="Letto" Command="{Binding ButtonCommand}"  FontSize="2"     Background="{Binding IsLightLettoOn,Mode=TwoWay}" Content="Letto" HorizontalAlignment="Center" Height="25" Width="25" Margin="235,309,252,66" RenderTransformOrigin="-1.907,2.067"/>
+
+    </Grid>
+</Page>
+ 
