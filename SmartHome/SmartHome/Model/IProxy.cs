@@ -11,7 +11,8 @@ namespace SmartHome.Model
         void Connect(string ip);
         void FindBridge();
         ILight GetLightByName(string name);
-
+        ILight GetLightContainsName(string name);
+        
         Task<List<string>> GetDeviceNamesAsync();
 
     }

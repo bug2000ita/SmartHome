@@ -181,7 +181,7 @@ namespace SmartHome.ViewModels
             //Value = buttonName;
             //RisePropertyChange(nameof(Value));
 
-            ILight light = HueProxy.GetLightByName((sender as Button).Name);
+            ILight light = HueProxy.GetLightContainsName((sender as Button).Name);
             if (light.IsOn())
             {
                 light.SwitchOff();
