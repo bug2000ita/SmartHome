@@ -27,6 +27,13 @@ namespace SmartHome.Model
             return light != null ? new HueLight(light) : null;
         }
 
+        public ILight GetLightContainsName(string name)
+        {
+            name = name.Replace('_', ' ');
+            var light = devices.First(deviceAvailable => deviceAvailable.Name.Contains(name));
+            return light != null ? new HueLight(light) : null;
+        }
+
         public async void Connect(string ip)
         {
             //192.168.2.2

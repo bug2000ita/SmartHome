@@ -7,6 +7,7 @@ using HueLibrary;
 using SmartHome.Infra;
 using SmartHome.Model;
 using Windows.UI;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace SmartHome.ViewModels
@@ -15,7 +16,6 @@ namespace SmartHome.ViewModels
     {
         private double lightValue = 50;
         private Bridge bridge;
-        private ICommand buttonCommand;
         private IProxy HueProxy = new HueProxy();
         private readonly Brush OnLightBackground = new SolidColorBrush(Colors.Yellow);
         private readonly Brush OffLightBackground = new SolidColorBrush(Colors.Black);
@@ -31,13 +31,8 @@ namespace SmartHome.ViewModels
 
         public RangeBaseValueChangedEventHandler HandlerSliderValueChanged;
 
-        public ICommand ButtonCommand
-        {
-            get { return buttonCommand; }
-            set { buttonCommand = value; }
-        }
-
-
+        public ICommand ButtonCommand { get; set; }
+        public ICommand ButtonLightCommand { get; set; }
 
 
         public Brush LightOneBackground;
@@ -160,7 +155,8 @@ namespace SmartHome.ViewModels
         {
 
 
-            buttonCommand =new DelegateCommand(PressButton);
+            ButtonCommand =new DelegateCommand(PressButton);
+            ButtonLightCommand = new DelegateCommand(PressButtonLight);
 
             HueProxy.Connect("192.168.2.2");
             var names = HueProxy.GetDeviceNamesAsync();/*.ContinueWith(
@@ -176,6 +172,24 @@ namespace SmartHome.ViewModels
             //RisePropertyChange(nameof(Value));
 
             Initialize(HueProxy.DeviceNames as List<string>);
+        }
+
+        private void PressButtonLight(object sender)
+        {
+            //var names = HueProxy.DeviceNames;
+            //string buttonName = names.Cast<object>().Aggregate("", (current, name) => current + (" " + name));
+            //Value = buttonName;
+            //RisePropertyChange(nameof(Value));
+
+            ILight light = HueProxy.GetLightContainsName((sender as Button).Name);
+            if (light.IsOn())
+            {
+                light.SwitchOff();
+            }
+            else
+            {
+                light.SwitchOn();
+            }
         }
 
         public double LightValue 
