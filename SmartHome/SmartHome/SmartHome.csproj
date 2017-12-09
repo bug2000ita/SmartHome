@@ -102,8 +102,12 @@
     <Compile Include="Model\IProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\LightControlViewModel.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LightControlView.xaml.cs">
+      <DependentUpon>LightControlView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +118,8 @@
     <None Include="SmartHome_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LightOff.png" />
+    <Content Include="LightOn.png" />
     <Content Include="PiantaCasa.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -134,6 +140,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LightControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

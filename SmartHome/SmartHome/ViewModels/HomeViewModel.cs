@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -7,13 +8,18 @@ using HueLibrary;
 using SmartHome.Infra;
 using SmartHome.Model;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Microsoft.Xaml.Interactions.Core;
+using SmartHome.Views;
 
 namespace SmartHome.ViewModels
 {
     public class HomeViewModel:Screen
     {
+        private readonly INavigationService navigationService;
+
         private double lightValue = 50;
         private Bridge bridge;
         private IProxy HueProxy = new HueProxy();
@@ -151,9 +157,9 @@ namespace SmartHome.ViewModels
 
         }
 
-        public HomeViewModel()
+        public HomeViewModel(INavigationService navigationService)
         {
-
+            this.navigationService = navigationService;
 
             ButtonCommand =new DelegateCommand(PressButton);
             ButtonLightCommand = new DelegateCommand(PressButtonLight);
@@ -166,6 +172,8 @@ namespace SmartHome.ViewModels
 
         private void PressButton(object sender)
         {
+            navigationService.NavigateToViewModel<LightControlViewModel>();
+
             //var names = HueProxy.DeviceNames;
             //string buttonName = names.Cast<object>().Aggregate("", (current, name) => current + (" " + name));
             //Value = buttonName;

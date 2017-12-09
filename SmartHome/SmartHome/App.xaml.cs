@@ -25,6 +25,7 @@ namespace SmartHome
             container = new WinRTContainer();
             container.RegisterWinRTServices();
             container.PerRequest<HomeViewModel>();
+            container.PerRequest<LightControlViewModel>();
         }
 
         protected override void PrepareViewFirst(Frame rootFrame)
