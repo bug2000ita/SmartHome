@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Caliburn.Micro;
 using SmartHome.Infra;
 using SmartHome.Model;
@@ -16,16 +18,30 @@ namespace SmartHome.ViewModels
 
         private DelegateCommand backNavigationCommand;
         private DelegateCommand switchLightCommand;
+        private ILight parameter;
         private INavigationService navigationService;
+        private float intensity;
 
         public LightControlViewModel(INavigationService navigationService)
         {
-            backNavigationCommand=new DelegateCommand(GoBackNavigation);
+
+
+            backNavigationCommand =new DelegateCommand(GoBackNavigation);
             switchLightCommand = new DelegateCommand(SwitchLight);
 
             this.navigationService = navigationService;
-        }
 
+
+        }
+        
+
+
+        public ImageSource Image => IsOn?  
+            new BitmapImage(new Uri("ms-appx:///LightOn.png")) : 
+            new BitmapImage(new Uri("ms-appx:///LightOff.png"));
+
+        public ICommand BackNavigationCommand => backNavigationCommand;
+        public ICommand SwitchLightCommand => switchLightCommand;
         private void SwitchLight(object sender)
         {
 
@@ -41,7 +57,7 @@ namespace SmartHome.ViewModels
 
         public bool IsOn => parameter.IsOn();
 
-        private ILight parameter;
+
 
         public ILight Parameter
         {
@@ -58,7 +74,6 @@ namespace SmartHome.ViewModels
         public string Name => parameter.Name;
 
 
-        private float intensity;
         public float Intensity
         {
             get { return intensity; }
@@ -69,9 +84,6 @@ namespace SmartHome.ViewModels
             }
         }
 
-
-        public ICommand BackNavigationCommand => backNavigationCommand;
-        public ICommand SwitchLightCommand => switchLightCommand;
 
         private void GoBackNavigation(object sender)
         {

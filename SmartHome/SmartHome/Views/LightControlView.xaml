@@ -18,7 +18,7 @@
             <RowDefinition Height="80*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Image Source="/LightOn.png"></Image>
+        <Image Source="{Binding Image}" />
         <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Name}" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">

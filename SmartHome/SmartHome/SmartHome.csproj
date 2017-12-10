@@ -118,8 +118,12 @@
     <None Include="SmartHome_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LightOff.png" />
-    <Content Include="LightOn.png" />
+    <Content Include="LightOff.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LightOn.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="PiantaCasa.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
