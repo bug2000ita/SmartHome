@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Controls.Primitives;
 using Caliburn.Micro;
 using HueLibrary;
@@ -9,6 +11,7 @@ using SmartHome.Infra;
 using SmartHome.Model;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Microsoft.Xaml.Interactions.Core;
@@ -157,7 +160,7 @@ namespace SmartHome.ViewModels
 
         }
 
-        public HomeViewModel(INavigationService navigationService)
+        public  HomeViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
 
@@ -165,39 +168,37 @@ namespace SmartHome.ViewModels
             ButtonLightCommand = new DelegateCommand(PressButtonLight);
 
             HueProxy.Connect("192.168.2.2");
-            var names = HueProxy.GetDeviceNamesAsync();/*.ContinueWith(
-                t => Initialize(t.Result));*/
+             HueProxy.GetDeviceNamesAsync().ContinueWith(async t=> 
+            {
+
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                    () =>
+                    {
+                        Initialize(HueProxy.DeviceNames as List<string>);
+                    });
+
+            });
+
+            
         }
+
+
+
 
 
         private void PressButton(object sender)
         {
-            navigationService.NavigateToViewModel<LightControlViewModel>();
-
-            //var names = HueProxy.DeviceNames;
-            //string buttonName = names.Cast<object>().Aggregate("", (current, name) => current + (" " + name));
-            //Value = buttonName;
-            //RisePropertyChange(nameof(Value));
 
             Initialize(HueProxy.DeviceNames as List<string>);
         }
 
         private void PressButtonLight(object sender)
         {
-            //var names = HueProxy.DeviceNames;
-            //string buttonName = names.Cast<object>().Aggregate("", (current, name) => current + (" " + name));
-            //Value = buttonName;
-            //RisePropertyChange(nameof(Value));
 
             ILight light = HueProxy.GetLightContainsName((sender as Button).Name);
-            if (light.IsOn())
-            {
-                light.SwitchOff();
-            }
-            else
-            {
-                light.SwitchOn();
-            }
+
+            navigationService.NavigateToViewModel<LightControlViewModel>(light);
+
         }
 
         public double LightValue 
