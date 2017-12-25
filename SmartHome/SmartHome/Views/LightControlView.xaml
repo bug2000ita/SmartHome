@@ -46,9 +46,9 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBox  Text="{Binding RedValue}"   FontSize="30" Margin="45 25 40 0" />
-                <TextBox  Text="{Binding GreenValue}" FontSize="30" Margin="45 25 40 0" />
-                <TextBox  Text="{Binding BlueValue}"  FontSize="30" Margin="25 25 0 0" />
+                <TextBox  Text="{Binding RedValue,Mode=TwoWay}"   FontSize="30" Margin="45 25 40 0" />
+                <TextBox  Text="{Binding GreenValue, Mode=TwoWay}" FontSize="30" Margin="45 25 40 0" />
+                <TextBox  Text="{Binding BlueValue,Mode=TwoWay}"  FontSize="30" Margin="25 25 0 0" />
             </StackPanel>
             
         </StackPanel>
