@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -194,10 +195,18 @@ namespace SmartHome.ViewModels
 
         private void PressButtonLight(object sender)
         {
+            try
+            {
+                ILight light = HueProxy.GetLightContainsName((sender as Button).Name);
+                navigationService.NavigateToViewModel<LightControlViewModel>(light);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);           
+            }
+            
 
-            ILight light = HueProxy.GetLightContainsName((sender as Button).Name);
-
-            navigationService.NavigateToViewModel<LightControlViewModel>(light);
+            
 
         }
 

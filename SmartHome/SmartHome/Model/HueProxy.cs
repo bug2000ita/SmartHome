@@ -1,6 +1,8 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using HueLibrary;
@@ -29,16 +31,32 @@ namespace SmartHome.Model
 
         public ILight GetLightContainsName(string name)
         {
-            name = name.Replace('_', ' ');
-            var light = devices.First(deviceAvailable => deviceAvailable.Name.Contains(name));
-            return light != null ? new HueLight(light) : null;
+            try
+            {
+                name = name.Replace('_', ' ');
+                var light = devices.First(deviceAvailable => deviceAvailable.Name.Contains(name));
+                return light != null ? new HueLight(light) : null;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
         }
 
         public async void Connect(string ip)
         {
             //192.168.2.2
-            hueBridge = new Bridge(ip, "3TkCwQ2eiHdB4cp9cVgaEayWibS-AqrBZxLBhmD0");
-            devices = await hueBridge.GetLightsAsync();
+            try
+            {
+                hueBridge = new Bridge(ip, "3TkCwQ2eiHdB4cp9cVgaEayWibS-AqrBZxLBhmD0");
+                devices = await hueBridge.GetLightsAsync();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+
         }
 
         public async void FindBridge()

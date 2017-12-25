@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows.Input;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Caliburn.Micro;
@@ -20,7 +16,7 @@ namespace SmartHome.ViewModels
         private DelegateCommand switchLightCommand;
         private ILight parameter;
         private INavigationService navigationService;
-        private float intensity;
+        private float brightness;
 
         public LightControlViewModel(INavigationService navigationService)
         {
@@ -30,33 +26,62 @@ namespace SmartHome.ViewModels
             switchLightCommand = new DelegateCommand(SwitchLight);
 
             this.navigationService = navigationService;
-
-
+            
         }
-        
 
 
-        public ImageSource Image => IsOn?  
-            new BitmapImage(new Uri("ms-appx:///LightOn.png")) : 
-            new BitmapImage(new Uri("ms-appx:///LightOff.png"));
+
+
+
+        private ImageSource image;
+        public ImageSource Image
+        {
+            get
+            {
+                ImageSource localImage = null;
+                var value = IsOn;
+
+                if (value == true)
+                {
+                    localImage = new BitmapImage(new Uri("ms-appx:///LightOn.png"));
+                }
+                else if (value == false)
+                {
+                    localImage = new BitmapImage(new Uri("ms-appx:///LightOff.png"));
+                }
+
+                return localImage;
+            }
+
+            private set
+            {
+                image = value;
+                RisePropertyChange(nameof(Image));
+            }
+        }
+
 
         public ICommand BackNavigationCommand => backNavigationCommand;
         public ICommand SwitchLightCommand => switchLightCommand;
         private void SwitchLight(object sender)
         {
+            if (parameter == null) return;
 
             if (parameter.IsOn())
             {
                 parameter.SwitchOff();
+                Image = new BitmapImage(new Uri("ms-appx:///LightOff.png"));
+
             }
             else
             {
                 parameter.SwitchOn();
+                Image = new BitmapImage(new Uri("ms-appx:///LightOn.png"));
             }
+        
         }
 
-        public bool IsOn => parameter.IsOn();
-
+        public bool? IsOn => parameter?.IsOn();
 
 
         public ILight Parameter
@@ -64,23 +89,82 @@ namespace SmartHome.ViewModels
             get { return parameter; }
             set
             {
-                if (value.Equals(parameter)) return;
+                if (value==null || value.Equals(parameter)) return;
                 parameter = value;
                 NotifyOfPropertyChange(() => Parameter);
             }
         }
 
 
-        public string Name => parameter.Name;
+        public string Name => parameter == null ? "Error Light Name" : parameter.Name;
 
 
-        public float Intensity
+        private double redValue = 0;
+        public double RedValue
         {
-            get { return intensity; }
             set
             {
-                intensity = value;
-                Parameter.ChangeBrightness((byte)value);
+                redValue = value;
+                ApplyRed(value);
+                
+            }
+        }
+
+
+        private void ApplyRed(double value)
+        {
+            
+        }
+
+
+        public float Brightness
+        {
+            get
+            {
+                return Parameter?.Brightness ?? 0;
+            }
+            set
+            {
+                Parameter?.ChangeBrightness((byte)value);           
+            }
+        }
+
+        public double ColorCoordinateX
+        {
+            get
+            {
+                return Parameter?.ColorCoordinates[0] ?? 0;
+            }
+            set
+            {
+                Parameter?.ChangeColorCoordinates(value, ColorCoordinateY);
+                
+            }
+        }
+
+        public double ColorCoordinateY
+        {
+            get
+            {
+                return Parameter?.ColorCoordinates[1] ?? 0;
+            }
+            set
+            {
+                Parameter?.ChangeColorCoordinates(ColorCoordinateX,value);
+            }
+        }
+
+        public float Saturation
+        {
+            get
+            {
+                return Parameter?.Saturation ?? 0;
+                
+            }
+
+            set
+            {
+                Parameter?.ChangeSaturation((byte)value);
             }
         }
 
@@ -91,6 +175,11 @@ namespace SmartHome.ViewModels
         }
 
 
+        private void RisePropertyChange(string propertyName)
+        {
 
+            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+
+        }
     }
 }

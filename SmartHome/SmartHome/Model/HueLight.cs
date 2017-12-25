@@ -13,6 +13,10 @@ namespace SmartHome.Model
         private Light light;
 
         public string Name => light.Name;
+        public byte Brightness => light.State.Brightness;
+        public byte Saturation => light.State.Saturation;
+
+        public double[] ColorCoordinates => light.State.ColorCoordinates;
 
         public HueLight(Light light)
         {
@@ -41,7 +45,7 @@ namespace SmartHome.Model
 
         public void ChangeBrightness(byte value)
         {
-            light.State.Brightness = value;
+            light.State.Brightness = value;       
         }
 
         public void ChangeColorCoordinates(double x, double y)

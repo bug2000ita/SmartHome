@@ -3,6 +3,9 @@
     public interface ILight
     {
         string Name { get; }
+        byte Brightness { get; }
+        byte Saturation { get; }
+        double[] ColorCoordinates { get; }
 
         void ChangeColorCoordinates(double x, double y);
         void ChangeBrightness(byte value);
