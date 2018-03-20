@@ -46,7 +46,7 @@ namespace SmartHome.Model
 
         public async void Connect(string ip)
         {
-            //192.168.2.2
+            //192.168.2.5
             try
             {
                 hueBridge = new Bridge(ip, "3TkCwQ2eiHdB4cp9cVgaEayWibS-AqrBZxLBhmD0");

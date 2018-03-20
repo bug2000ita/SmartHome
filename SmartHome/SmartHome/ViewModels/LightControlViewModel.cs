@@ -157,7 +157,7 @@ namespace SmartHome.ViewModels
 
         public void  RgbToXy(byte r, byte g, byte b)
         {
-            //if(parameter==null) return;
+            if(parameter==null) return;
 
             var red = PivotRgb(r / 255.0);
             var green = PivotRgb(g / 255.0);
@@ -167,9 +167,9 @@ namespace SmartHome.ViewModels
             var y = red * 0.2126 + green * 0.7152 + blue * 0.0722;
             var bri = red * 0.0193 + green * 0.1192 + blue * 0.9505;
 
-            //parameter.ChangeBrightness((byte)bri);
-            //parameter.ColorCoordinates[0] = x;
-            //parameter.ColorCoordinates[1] = y;
+            parameter.ChangeBrightness((byte)bri);
+            parameter.ColorCoordinates[0] = x;
+            parameter.ColorCoordinates[1] = y;
         }
 
         private  double PivotRgb(double n)

@@ -168,7 +168,7 @@ namespace SmartHome.ViewModels
             ButtonCommand =new DelegateCommand(PressButton);
             ButtonLightCommand = new DelegateCommand(PressButtonLight);
 
-            HueProxy.Connect("192.168.2.2");
+            HueProxy.Connect("192.168.2.5");
              HueProxy.GetDeviceNamesAsync().ContinueWith(async t=> 
             {
 
